@@ -1,57 +1,49 @@
-# **Predicción de Churn – Telecom X**
+# 📊 Telecom X – Predicción de Cancelación (Churn) - Parte 2
 
-Misión: Desarrollar un pipeline de Machine Learning capaz de anticipar la cancelación de clientes para la empresa Telecom X.
+![Status](https://img.shields.io/badge/Status-Finalizado-success)
+![Data](https://img.shields.io/badge/Data-Telecom_X-blue)
+![MIA](https://img.shields.io/badge/Desarrollado_por-MIA._C%C3%A9sar_Geovanni_Machuca_Pereida-orange)
 
-Este proyecto aborda el fenómeno del Churn (fuga de clientes) utilizando técnicas avanzadas de procesamiento de datos y modelos predictivos, permitiendo a la empresa pasar de una postura reactiva a una estrategia de retención proactiva.
+## 🎯 Propósito del Análisis
+El objetivo principal de este proyecto es construir un pipeline de Machine Learning capaz de **predecir la cancelación (churn)** de clientes en la empresa Telecom X. Al identificar a los clientes con alta probabilidad de abandono basándose en sus características financieras, demográficas y de servicio, la empresa puede implementar estrategias de retención proactivas y optimizar sus recursos.
 
-**Estructura del Proyecto**
-El desarrollo se divide en tres etapas críticas:
+---
 
-**1. Preparación y Feature Engineering**
+## 📂 Estructura del Proyecto
+* `TelecomX_parte2_LATAM_2.ipynb`: Cuaderno principal con el flujo completo (EDA, Preprocesamiento y Modelado).
+* `datos_tratados.csv`: Conjunto de datos final tras la limpieza, codificación e ingeniería de variables.
+* `visualizaciones/`: Carpeta que contiene los gráficos de importancia de variables, matrices de confusión y análisis de correlación (generados durante la ejecución).
 
-* Limpieza: Eliminación de identificadores irrelevantes para evitar el sobreajuste.
-* Codificación: Transformación de variables categóricas mediante One-Hot Encoding.
-* Tratamiento de Desbalance: Aplicación de SMOTE (Synthetic Minority Over-sampling Technique) para equilibrar la clase minoritaria (clientes que cancelan).
-* Escalado: Estandarización de variables numéricas (StandardScaler) para modelos sensibles a la magnitud.
+---
 
-**2. Modelado Predictivo**
+## 🧠 Preparación de los Datos
+El proceso de preparación fue diseñado siguiendo los estándares de rigor técnico para asegurar la generalización de los modelos:
 
-Se evaluaron y contrastaron dos arquitecturas distintas:
+### 1. Clasificación de Variables
+* **Numéricas Continuas:** `tenure`, `MonthlyCharges`, `TotalCharges`.
+* **Categóricas:** `gender`, `Partner`, `Dependents`, `InternetService`, `Contract`, `PaymentMethod`, entre otras.
 
-* Regresión Logística: Seleccionada por su robustez y alto Recall (80%), permitiendo identificar a la gran mayoría de clientes en riesgo.
-* Random Forest: Utilizado para capturar relaciones no lineales, aunque presentó una tendencia al overfitting que requiere una poda de hiperparámetros.
+### 2. Ingeniería y Transformación
+* **Codificación:** Se aplicó *One-Hot Encoding* a las variables categóricas para transformarlas en formato numérico compatible con los algoritmos.
+* **Normalización:** Se utilizó `StandardScaler` para las variables numéricas en modelos sensibles a la escala (como Regresión Logística), garantizando que variables de gran magnitud no sesguen el aprendizaje.
+* **Tratamiento de Desbalance:** Dado que la clase de cancelación representaba solo el 26.5%, se aplicó **SMOTE** en el conjunto de entrenamiento para equilibrar las clases sintéticamente.
 
-**3. Análisis de Importancia de Variables**
+### 3. División del Dataset
+Se realizó una separación estratificada (**Stratified Split**) del **75% para entrenamiento** y **25% para prueba**, asegurando que la proporción de cancelaciones se mantenga constante en ambos grupos para una evaluación justa.
 
-Se identificaron los "Drivers" clave del negocio:
+---
 
-* Contrato Mes a Mes: El principal indicador de riesgo.
-* Antigüedad (Tenure): El factor de lealtad más fuerte; el riesgo cae drásticamente tras los 38 meses.
-* Fibra Óptica: Segmento tecnológico con mayor tasa de deserción, identificado como punto de mejora operativa.
+## 📈 Insights y Visualizaciones Clave (EDA)
+Durante el análisis, se obtuvieron hallazgos críticos:
+* **El Factor Contrato:** Los clientes con contratos "Mes a Mes" tienen una correlación positiva de 0.40 con la cancelación.
+* **Antigüedad:** La mediana de antigüedad de quienes cancelan es de solo 10 meses, frente a 38 meses de los clientes leales.
+* **Fibra Óptica:** Es el servicio con mayor tasa de deserción, sugiriendo un punto de fricción en la experiencia del usuario o precio.
 
-**Tecnologías Utilizadas**
-* Lenguaje: Python 3.x
-* Entorno: Google Colab / Jupyter Notebook
-* Bibliotecas Clave:
-* Pandas & NumPy: Manipulación de datos.
-* Scikit-Learn: Modelado y preprocesamiento.
-* Imbalanced-learn: Balanceo de clases (SMOTE).
-* Matplotlib & Seaborn: Visualización estadística.
+---
 
-**Resultados y Conclusiones**
-El modelo final (Regresión Logística) alcanzó un F1-Score del 62% y un Recall del 80% en el conjunto de prueba.
+## ⚙️ Instrucciones de Ejecución
 
-**Estrategias de Retención Recomendadas:**
-* Incentivos de Contrato: Migrar clientes de planes mensuales a anuales.
-* Onboarding Crítico: Campañas de soporte intensivo durante los primeros 12 meses.
-* Auditoría de Fibra: Revisar la propuesta de valor del servicio de fibra óptica debido a su alta correlación con el churn.
-
-**Contenido del Repositorio**
-* TelecomX_parte2_LATAM_2.ipynb: Notebook principal con el desarrollo del pipeline.
-* datos_tratados.csv: Dataset procesado y listo para entrenamiento.
-* README.md: Descripción del proyecto (este archivo).
-
-
-Desarrollado por: MIA. César Geovanni Machuca Pereida
-
-Fecha: Marzo 2026
+### Requisitos Previos
+Es necesario contar con Python 3.8+ y las siguientes bibliotecas instaladas:
+```bash
+pip install pandas numpy scikit-learn seaborn matplotlib imbalanced-learn
